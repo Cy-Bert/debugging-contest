@@ -10,11 +10,11 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($order = 'asc')
     {
-        $tasks_pending = Task::where('status', 'pending')->oldest('end_date')->get();
-        $tasks_completed = Task::where('status', 'completed')->oldest('end_date')->get();
-        $tasks_in_progress = Task::where('status', 'in progress')->oldest('end_date')->get();
+        $tasks_pending = Task::where('status', 'pending')->orderBy('end_date', $order)->get();
+        $tasks_completed = Task::where('status', 'completed')->orderBy('end_date', $order)->get();
+        $tasks_in_progress = Task::where('status', 'in progress')->orderBy('end_date', $order)->get();
 
         return view('tasks.index', compact('tasks_pending', 'tasks_completed', 'tasks_in_progress'));
     }
